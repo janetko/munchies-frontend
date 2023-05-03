@@ -7,14 +7,13 @@
 
 import UIKit
 
-class RestaurantTableViewCell: UITableViewCell {
+class RestaurantCollectionViewCell: UICollectionViewCell {
     
     let nameLabel = UILabel()
     let eatPicView = UIImageView()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         contentView.addSubview(nameLabel)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -22,21 +21,24 @@ class RestaurantTableViewCell: UITableViewCell {
         eatPicView.translatesAutoresizingMaskIntoConstraints = false
         
         setupConstraints()
-        
     }
     
     func setupConstraints() {
         
         NSLayoutConstraint.activate([
+            
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor)
         ])
         
         NSLayoutConstraint.activate([
+            eatPicView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
             eatPicView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             eatPicView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             eatPicView.widthAnchor.constraint(equalToConstant: 50),
-            eatPicView.heightAnchor.constraint(equalToConstant: 50)
+            eatPicView.heightAnchor.constraint(equalToConstant: 50),
+            eatPicView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
     

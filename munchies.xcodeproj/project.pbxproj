@@ -16,7 +16,7 @@
 		36C6BA4F29FF6AB000CDDAB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36C6BA4D29FF6AB000CDDAB9 /* LaunchScreen.storyboard */; };
 		36C6BA5D29FF6D3500CDDAB9 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA5C29FF6D3500CDDAB9 /* Review.swift */; };
 		36C6BA5F29FF745C00CDDAB9 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA5E29FF745C00CDDAB9 /* Restaurant.swift */; };
-		36C6BA6129FF753500CDDAB9 /* RestaurantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA6029FF753500CDDAB9 /* RestaurantTableViewCell.swift */; };
+		36C6BA6129FF753500CDDAB9 /* RestaurantCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA6029FF753500CDDAB9 /* RestaurantCollectionViewCell.swift */; };
 		36C6BA6329FF7BC900CDDAB9 /* ReviewListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA6229FF7BC900CDDAB9 /* ReviewListViewController.swift */; };
 		36C6BA6529FF7E6B00CDDAB9 /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA6429FF7E6B00CDDAB9 /* ReviewTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -33,7 +33,7 @@
 		36C6BA5029FF6AB000CDDAB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		36C6BA5C29FF6D3500CDDAB9 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		36C6BA5E29FF745C00CDDAB9 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
-		36C6BA6029FF753500CDDAB9 /* RestaurantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantTableViewCell.swift; sourceTree = "<group>"; };
+		36C6BA6029FF753500CDDAB9 /* RestaurantCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCollectionViewCell.swift; sourceTree = "<group>"; };
 		36C6BA6229FF7BC900CDDAB9 /* ReviewListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewListViewController.swift; sourceTree = "<group>"; };
 		36C6BA6429FF7E6B00CDDAB9 /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,7 +72,7 @@
 				36C6BA4129FF6AAC00CDDAB9 /* SceneDelegate.swift */,
 				36C6BA4329FF6AAC00CDDAB9 /* ViewController.swift */,
 				36C6BA5E29FF745C00CDDAB9 /* Restaurant.swift */,
-				36C6BA6029FF753500CDDAB9 /* RestaurantTableViewCell.swift */,
+				36C6BA6029FF753500CDDAB9 /* RestaurantCollectionViewCell.swift */,
 				36C6BA6229FF7BC900CDDAB9 /* ReviewListViewController.swift */,
 				36C6BA5C29FF6D3500CDDAB9 /* Review.swift */,
 				36C6BA6429FF7E6B00CDDAB9 /* ReviewTableViewCell.swift */,
@@ -161,7 +161,7 @@
 				36C6BA5F29FF745C00CDDAB9 /* Restaurant.swift in Sources */,
 				36C6BA4A29FF6AAC00CDDAB9 /* munchies.xcdatamodeld in Sources */,
 				36C6BA4029FF6AAC00CDDAB9 /* AppDelegate.swift in Sources */,
-				36C6BA6129FF753500CDDAB9 /* RestaurantTableViewCell.swift in Sources */,
+				36C6BA6129FF753500CDDAB9 /* RestaurantCollectionViewCell.swift in Sources */,
 				36C6BA6329FF7BC900CDDAB9 /* ReviewListViewController.swift in Sources */,
 				36C6BA6529FF7E6B00CDDAB9 /* ReviewTableViewCell.swift in Sources */,
 				36C6BA4229FF6AAC00CDDAB9 /* SceneDelegate.swift in Sources */,
