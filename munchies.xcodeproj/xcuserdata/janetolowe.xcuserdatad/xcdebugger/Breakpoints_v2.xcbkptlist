@@ -14,57 +14,10 @@
             filePath = "munchies/RestaurantViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "16"
-            endingLineNumber = "16"
-            landmarkName = "RestaurantViewController"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  uuid = "276D12C0-49AC-47C5-8DFD-95B3E47C536D - 1cc1664350c1b9f8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "munchies.RestaurantViewController.logoutButton.getter : __C.UIButton"
-                  moduleName = "munchies"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/janetolowe/Downloads/Academics/Classes/CS1998-601/projects/munchies/munchies/RestaurantViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "16"
-                  endingLineNumber = "16"
-                  offsetFromSymbolStart = "48">
-               </Location>
-               <Location
-                  uuid = "276D12C0-49AC-47C5-8DFD-95B3E47C536D - 4691ca8427fb02df"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "munchies.RestaurantViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; munchies.RestaurantViewController"
-                  moduleName = "munchies"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/janetolowe/Downloads/Academics/Classes/CS1998-601/projects/munchies/munchies/RestaurantViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "16"
-                  endingLineNumber = "16"
-                  offsetFromSymbolStart = "264">
-               </Location>
-               <Location
-                  uuid = "276D12C0-49AC-47C5-8DFD-95B3E47C536D - 63ea77f08c16c88d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "munchies.RestaurantViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;munchies.RestaurantViewController&gt;"
-                  moduleName = "munchies"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/janetolowe/Downloads/Academics/Classes/CS1998-601/projects/munchies/munchies/RestaurantViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "16"
-                  endingLineNumber = "16"
-                  offsetFromSymbolStart = "240">
-               </Location>
-            </Locations>
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

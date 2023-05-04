@@ -42,7 +42,7 @@ class LoginViewController: UIViewController {
         usernameLabel.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
         usernameLabel.font = UIFont(name: "Lato-Bold", size: 22)
         usernameLabel.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
-        usernameLabel.text = "username"
+        usernameLabel.text = "Username"
         usernameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(usernameLabel)
         
@@ -62,7 +62,7 @@ class LoginViewController: UIViewController {
         passwordLabel.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
         passwordLabel.font = UIFont(name: "Lato-Bold", size: 22)
         passwordLabel.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
-        passwordLabel.text = "password"
+        passwordLabel.text = "Password"
         passwordLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(passwordLabel)
         
