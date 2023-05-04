@@ -6,11 +6,13 @@
 //
 
 class Restaurant {
-    let name: String
-    let eatPicName: String
+    var name: String
+    var eatPicName: String
+    var rating: String
     
-    init(name: String, eatPicName: String) {
+    init(name: String, eatPicName: String, rating: String) {
         self.name = name
         self.eatPicName = eatPicName
+        self.rating = rating
     }
 }

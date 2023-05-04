@@ -13,9 +13,9 @@ class RestaurantCollectionViewCell: UICollectionViewCell {
     
     let nameLabel = UILabel()
     let eatPicView = UIImageView()
+    let rating = UIImageView()
     
     let titlebox = UIImageView()
-    let rates = UIImageView()
 
     
     override init(frame: CGRect) {
@@ -37,9 +37,8 @@ class RestaurantCollectionViewCell: UICollectionViewCell {
         nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         contentView.addSubview(nameLabel)
         
-        rates.translatesAutoresizingMaskIntoConstraints = false
-        rates.image = UIImage(named: "stars")
-        contentView.addSubview(rates)
+        rating.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(rating)
 
         
         setupConstraints()
@@ -53,10 +52,10 @@ class RestaurantCollectionViewCell: UICollectionViewCell {
         ])
         
         NSLayoutConstraint.activate([
-            rates.topAnchor.constraint(equalTo: eatPicView.bottomAnchor, constant: -34),
-            rates.trailingAnchor.constraint(equalTo: titlebox.trailingAnchor, constant: -13),
-            rates.heightAnchor.constraint(equalToConstant: 18),
-            rates.widthAnchor.constraint(equalToConstant: 100)
+            rating.topAnchor.constraint(equalTo: eatPicView.bottomAnchor, constant: -34),
+            rating.trailingAnchor.constraint(equalTo: titlebox.trailingAnchor, constant: -13),
+            rating.heightAnchor.constraint(equalToConstant: 18),
+            rating.widthAnchor.constraint(equalToConstant: 100)
 
         ])
         
@@ -86,6 +85,7 @@ class RestaurantCollectionViewCell: UICollectionViewCell {
     func configure(with restaurant: Restaurant) {
         nameLabel.text = restaurant.name
         eatPicView.image = UIImage(named: restaurant.eatPicName)
+        rating.image = UIImage(named: restaurant.rating)
     }
     
 }

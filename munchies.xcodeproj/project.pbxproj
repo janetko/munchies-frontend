@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3662EB502A0345E100D20D63 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3662EB4F2A0345E100D20D63 /* LoginViewController.swift */; };
+		3662EB522A03ABDA00D20D63 /* WriteReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3662EB512A03ABDA00D20D63 /* WriteReviewViewController.swift */; };
 		36C6BA4029FF6AAC00CDDAB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA3F29FF6AAC00CDDAB9 /* AppDelegate.swift */; };
 		36C6BA4229FF6AAC00CDDAB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA4129FF6AAC00CDDAB9 /* SceneDelegate.swift */; };
-		36C6BA4429FF6AAC00CDDAB9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA4329FF6AAC00CDDAB9 /* ViewController.swift */; };
+		36C6BA4429FF6AAC00CDDAB9 /* RestaurantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA4329FF6AAC00CDDAB9 /* RestaurantViewController.swift */; };
 		36C6BA4729FF6AAC00CDDAB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36C6BA4529FF6AAC00CDDAB9 /* Main.storyboard */; };
 		36C6BA4A29FF6AAC00CDDAB9 /* munchies.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA4829FF6AAC00CDDAB9 /* munchies.xcdatamodeld */; };
 		36C6BA4C29FF6AB000CDDAB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36C6BA4B29FF6AB000CDDAB9 /* Assets.xcassets */; };
@@ -17,15 +19,17 @@
 		36C6BA5D29FF6D3500CDDAB9 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA5C29FF6D3500CDDAB9 /* Review.swift */; };
 		36C6BA5F29FF745C00CDDAB9 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA5E29FF745C00CDDAB9 /* Restaurant.swift */; };
 		36C6BA6129FF753500CDDAB9 /* RestaurantCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA6029FF753500CDDAB9 /* RestaurantCollectionViewCell.swift */; };
-		36C6BA6329FF7BC900CDDAB9 /* ReviewListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA6229FF7BC900CDDAB9 /* ReviewListViewController.swift */; };
-		36C6BA6529FF7E6B00CDDAB9 /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA6429FF7E6B00CDDAB9 /* ReviewTableViewCell.swift */; };
+		36C6BA6329FF7BC900CDDAB9 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA6229FF7BC900CDDAB9 /* ReviewViewController.swift */; };
+		36C6BA6529FF7E6B00CDDAB9 /* ReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA6429FF7E6B00CDDAB9 /* ReviewCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3662EB4F2A0345E100D20D63 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3662EB512A03ABDA00D20D63 /* WriteReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteReviewViewController.swift; sourceTree = "<group>"; };
 		36C6BA3C29FF6AAC00CDDAB9 /* munchies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = munchies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36C6BA3F29FF6AAC00CDDAB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		36C6BA4129FF6AAC00CDDAB9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		36C6BA4329FF6AAC00CDDAB9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		36C6BA4329FF6AAC00CDDAB9 /* RestaurantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewController.swift; sourceTree = "<group>"; };
 		36C6BA4629FF6AAC00CDDAB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		36C6BA4929FF6AAC00CDDAB9 /* munchies.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = munchies.xcdatamodel; sourceTree = "<group>"; };
 		36C6BA4B29FF6AB000CDDAB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -34,8 +38,8 @@
 		36C6BA5C29FF6D3500CDDAB9 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		36C6BA5E29FF745C00CDDAB9 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		36C6BA6029FF753500CDDAB9 /* RestaurantCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCollectionViewCell.swift; sourceTree = "<group>"; };
-		36C6BA6229FF7BC900CDDAB9 /* ReviewListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewListViewController.swift; sourceTree = "<group>"; };
-		36C6BA6429FF7E6B00CDDAB9 /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
+		36C6BA6229FF7BC900CDDAB9 /* ReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
+		36C6BA6429FF7E6B00CDDAB9 /* ReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,12 +74,14 @@
 			children = (
 				36C6BA3F29FF6AAC00CDDAB9 /* AppDelegate.swift */,
 				36C6BA4129FF6AAC00CDDAB9 /* SceneDelegate.swift */,
-				36C6BA4329FF6AAC00CDDAB9 /* ViewController.swift */,
+				3662EB4F2A0345E100D20D63 /* LoginViewController.swift */,
 				36C6BA5E29FF745C00CDDAB9 /* Restaurant.swift */,
+				36C6BA4329FF6AAC00CDDAB9 /* RestaurantViewController.swift */,
 				36C6BA6029FF753500CDDAB9 /* RestaurantCollectionViewCell.swift */,
-				36C6BA6229FF7BC900CDDAB9 /* ReviewListViewController.swift */,
 				36C6BA5C29FF6D3500CDDAB9 /* Review.swift */,
-				36C6BA6429FF7E6B00CDDAB9 /* ReviewTableViewCell.swift */,
+				36C6BA6229FF7BC900CDDAB9 /* ReviewViewController.swift */,
+				36C6BA6429FF7E6B00CDDAB9 /* ReviewCollectionViewCell.swift */,
+				3662EB512A03ABDA00D20D63 /* WriteReviewViewController.swift */,
 				36C6BA4529FF6AAC00CDDAB9 /* Main.storyboard */,
 				36C6BA4B29FF6AB000CDDAB9 /* Assets.xcassets */,
 				36C6BA4D29FF6AB000CDDAB9 /* LaunchScreen.storyboard */,
@@ -156,14 +162,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				36C6BA4429FF6AAC00CDDAB9 /* ViewController.swift in Sources */,
+				36C6BA4429FF6AAC00CDDAB9 /* RestaurantViewController.swift in Sources */,
 				36C6BA5D29FF6D3500CDDAB9 /* Review.swift in Sources */,
 				36C6BA5F29FF745C00CDDAB9 /* Restaurant.swift in Sources */,
+				3662EB522A03ABDA00D20D63 /* WriteReviewViewController.swift in Sources */,
 				36C6BA4A29FF6AAC00CDDAB9 /* munchies.xcdatamodeld in Sources */,
 				36C6BA4029FF6AAC00CDDAB9 /* AppDelegate.swift in Sources */,
 				36C6BA6129FF753500CDDAB9 /* RestaurantCollectionViewCell.swift in Sources */,
-				36C6BA6329FF7BC900CDDAB9 /* ReviewListViewController.swift in Sources */,
-				36C6BA6529FF7E6B00CDDAB9 /* ReviewTableViewCell.swift in Sources */,
+				36C6BA6329FF7BC900CDDAB9 /* ReviewViewController.swift in Sources */,
+				36C6BA6529FF7E6B00CDDAB9 /* ReviewCollectionViewCell.swift in Sources */,
+				3662EB502A0345E100D20D63 /* LoginViewController.swift in Sources */,
 				36C6BA4229FF6AAC00CDDAB9 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

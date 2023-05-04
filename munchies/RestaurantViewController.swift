@@ -7,27 +7,28 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class RestaurantViewController: UIViewController {
     
     let header = UIImageView()
     let footer = UIImageView()
     
-    let currUser = UILabel()
-    let logout = UIButton()
+    let currUserLabel = UILabel()
+    let logoutButton = UIButton()
     
 //    let heading = UILabel()
     
     let restaurants = [
-        Restaurant(name: "Trillium", eatPicName: "trillium"),
-        Restaurant(name: "Bear Necessities", eatPicName: "bear_necessities"),
-        Restaurant(name: "Jansen's Market", eatPicName: "jansens"),
-        Restaurant(name: "Bus Stop Bagels", eatPicName: "bus_stop")
+        Restaurant(name: "Trillium", eatPicName: "trillium", rating: "stars5"),
+        Restaurant(name: "Bear Necessities", eatPicName: "bear_necessities", rating: "stars4"),
+        Restaurant(name: "Jansen's Market", eatPicName: "jansens", rating: "stars3"),
+        Restaurant(name: "Bus Stop Bagels", eatPicName: "bus_stop", rating: "stars2")
     ]
     
     var restaurantCollectionView: UICollectionView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.hidesBackButton = true
         view.backgroundColor = UIColor(red: 240/255, green: 137/255, blue: 128/255, alpha: 1)
         
 //        title = "Munchies"
@@ -64,21 +65,22 @@ class ViewController: UIViewController {
 //        heading.translatesAutoresizingMaskIntoConstraints = false
 //        view.addSubview(heading)
 
-        currUser.text = "Hi, janetko!"
-        currUser.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
-        currUser.backgroundColor = .clear
-        currUser.font = UIFont(name: "Lato-Bold", size: 20)
-        currUser.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        currUser.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(currUser)
+        currUserLabel.text = "Hi, janetko!"
+        currUserLabel.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
+        currUserLabel.backgroundColor = .clear
+        currUserLabel.font = UIFont(name: "Lato-Bold", size: 20)
+        currUserLabel.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        currUserLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(currUserLabel)
         
-        logout.setTitle("Log Out", for: .normal)
-        logout.setTitleColor(UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1), for: .normal)
-        logout.backgroundColor = .clear
-        logout.titleLabel?.font = UIFont(name: "Lato-Bold", size: 20)
-        logout.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        logout.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(logout)
+        logoutButton.setTitle("Log Out", for: .normal)
+        logoutButton.setTitleColor(UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1), for: .normal)
+        logoutButton.backgroundColor = .clear
+        logoutButton.titleLabel?.font = UIFont(name: "Lato-Bold", size: 20)
+        logoutButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        logoutButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(logoutButton)
         
         setupConstraints()
     }
@@ -111,13 +113,13 @@ class ViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            currUser.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-            currUser.bottomAnchor.constraint(equalTo: footer.bottomAnchor, constant: -42)
+            currUserLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
+            currUserLabel.bottomAnchor.constraint(equalTo: footer.bottomAnchor, constant: -42)
         ])
         
         NSLayoutConstraint.activate([
-            logout.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
-            logout.bottomAnchor.constraint(equalTo: footer.bottomAnchor, constant: -40)
+            logoutButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
+            logoutButton.bottomAnchor.constraint(equalTo: footer.bottomAnchor, constant: -36)
         ])
         
         
@@ -125,13 +127,19 @@ class ViewController: UIViewController {
     }
     
     func showReviews(for restaurant: Restaurant) {
-            let reviewsViewController = ReviewListViewController(restaurant: restaurant)
+            let reviewsViewController = ReviewViewController(restaurant: restaurant)
             navigationController?.pushViewController(reviewsViewController, animated: true)
         }
+    
+    @objc func logoutButtonTapped() {
+          if let loginVC = navigationController?.viewControllers.first(where: { $0 is LoginViewController }) {
+              navigationController?.popToViewController(loginVC, animated: true)
+          }
+      }
 
 }
 
-extension ViewController: UICollectionViewDataSource {
+extension RestaurantViewController: UICollectionViewDataSource {
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return restaurants.count
@@ -152,10 +160,9 @@ extension ViewController: UICollectionViewDataSource {
     
 }
 
-extension ViewController: UICollectionViewDelegateFlowLayout {
+extension RestaurantViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let width = collectionView.bounds.width - 16
         return CGSize(width: 357, height: 172)
     }
     
@@ -164,7 +171,6 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         return 20
     }
 
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let restaurant = restaurants[indexPath.row]
        showReviews(for: restaurant)
