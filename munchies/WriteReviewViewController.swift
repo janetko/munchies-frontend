@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class WriteReviewViewController: UIViewController {
     
@@ -21,13 +22,44 @@ class WriteReviewViewController: UIViewController {
     let ratingLabel = UILabel()
     let ratingSlider = UISlider()
     let sliderBox = UIImageView()
+    let uploadImageView = UIImageView()
+    var uploadImage = UIImage(named: "")
     
+    weak var delegate: ReloadViewDelegate?
+    
+    
+    let imagePicker = UIImagePickerController()
+
+    let user: User
+    
+    var restaurant: Restaurant
+    
+    init(restaurant: Restaurant, user: User, delegate: ReloadViewDelegate) {
+        self.delegate = delegate
+        self.restaurant = restaurant
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
     
 
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
         view.backgroundColor = UIColor(red: 240/255, green: 137/255, blue: 128/255, alpha: 1)
+        
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+
+        // Remove UINavBar background color
+        let app = UINavigationBarAppearance()
+        app.configureWithTransparentBackground()
+        self.navigationController?.navigationBar.standardAppearance = app
+        self.navigationController?.navigationBar.scrollEdgeAppearance = app
+        self.navigationController?.navigationBar.compactAppearance = app
 
         header.image = UIImage(named: "header4")
         header.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +75,7 @@ class WriteReviewViewController: UIViewController {
         heading.backgroundColor = .clear
         heading.font = UIFont(name: "Lato-Bold", size: 35)
         heading.font = UIFont.systemFont(ofSize: 28, weight: .semibold)
-        heading.text = "Trillium"
+        heading.text = restaurant.name
         heading.textAlignment = .center
         heading.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(heading)
@@ -62,7 +94,7 @@ class WriteReviewViewController: UIViewController {
         submitButton.backgroundColor = .clear
         submitButton.titleLabel?.font = UIFont(name: "Lato-Bold", size: 20)
         submitButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-//        submitButton.addTarget(self, action: #selector(submitReview(for: Restaurant)), for: .touchUpInside)
+        submitButton.addTarget(self, action: #selector(submitReview), for: .touchUpInside)
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(submitButton)
         
@@ -92,9 +124,14 @@ class WriteReviewViewController: UIViewController {
         view.addSubview(uploadLabel)
         
         uploadButton.setImage(UIImage(named: "add-file"), for: .normal)
-//        uploadButton.addTarget(self, action: #selector(uploadButtonTapped), for: .touchUpInside)
+        uploadButton.addTarget(self, action: #selector(uploadButtonTapped), for: .touchUpInside)
         uploadButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(uploadButton)
+        
+        uploadImageView.layer.cornerRadius = 12
+        uploadImageView.clipsToBounds = true
+        uploadImageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(uploadImageView)
         
         ratingLabel.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
         ratingLabel.font = UIFont(name: "Lato-Bold", size: 22)
@@ -108,7 +145,7 @@ class WriteReviewViewController: UIViewController {
         view.addSubview(sliderBox)
         
         ratingSlider.minimumValue = 1
-        ratingSlider.maximumValue = 5
+        ratingSlider.maximumValue = 5.99
         ratingSlider.value = 3
         ratingSlider.minimumTrackTintColor = .black
 //        ratingSlider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
@@ -134,7 +171,7 @@ class WriteReviewViewController: UIViewController {
         NSLayoutConstraint.activate([
             heading.topAnchor.constraint(equalTo: header.bottomAnchor),
             heading.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            heading.widthAnchor.constraint(equalToConstant: 196),
+            heading.widthAnchor.constraint(equalToConstant: 390),
             heading.heightAnchor.constraint(equalToConstant: 48)
         ])
         
@@ -160,6 +197,13 @@ class WriteReviewViewController: UIViewController {
             uploadButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 38),
             uploadButton.widthAnchor.constraint(equalToConstant: 68),
             uploadButton.heightAnchor.constraint(equalToConstant: 63)
+        ])
+        
+        NSLayoutConstraint.activate([
+            uploadImageView.topAnchor.constraint(equalTo: commentTextView.bottomAnchor, constant: 32),
+            uploadImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -38),
+            uploadImageView.widthAnchor.constraint(equalToConstant: 113),
+            uploadImageView.heightAnchor.constraint(equalToConstant: 95)
         ])
         
         NSLayoutConstraint.activate([
@@ -197,16 +241,59 @@ class WriteReviewViewController: UIViewController {
         
     }
     
+    @objc func uploadButtonTapped() {
+        
+        present(imagePicker, animated: true, completion: nil)
+        
+
+
+
+        
+    }
+    
     @objc func backButtonTapped() {
           if let reviewVC = navigationController?.viewControllers.first(where: { $0 is ReviewViewController }) {
               navigationController?.popToViewController(reviewVC, animated: true)
+              delegate?.reloadView()
           }
       }
     
-    func submitReview(for restaurant: Restaurant) {
-            let reviewsVC = ReviewViewController(restaurant: restaurant)
+    @objc func submitReview() {
+        
+        // format the date
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "M/d/yy"
+
+        let username = user.username
+        let date = dateFormatter.string(from: currentDate)
+        let comment = commentTextView.text ?? ""
+        let foodPic = uploadImage
+        let rating = "stars" + String(Int(ratingSlider.value))
+
+        let newReview = Review(username: username, date: date, comment: comment, foodPic: foodPic!, rating: rating)
+        restaurant.reviews.append(newReview)
+            
+        let reviewsVC = ReviewViewController(restaurant: restaurant, user: self.user)
             navigationController?.pushViewController(reviewsVC, animated: true)
         }
+    
+}
 
+extension WriteReviewViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            
+            uploadImage = selectedImage
+            uploadImageView.image = uploadImage
+            
+            // Do something with the selected image
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+}
 
+protocol ReloadViewDelegate: UIViewController {
+    func reloadView()
 }

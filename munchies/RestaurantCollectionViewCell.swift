@@ -16,6 +16,8 @@ class RestaurantCollectionViewCell: UICollectionViewCell {
     let rating = UIImageView()
     
     let titlebox = UIImageView()
+    
+    
 
     
     override init(frame: CGRect) {

@@ -108,7 +108,7 @@ class ReviewCollectionViewCell: UICollectionViewCell {
         usernameLabel.text = review.username
         dateLabel.text = review.date
         commentLabel.text = review.comment
-        foodPicView.image = UIImage(named: review.foodPic)
+        foodPicView.image = review.foodPic
         rating.image = UIImage(named: review.rating)
     }
 }

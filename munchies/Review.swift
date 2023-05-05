@@ -12,10 +12,10 @@ class Review {
     var username: String
     var date: String
     var comment: String
-    var foodPic: String
+    var foodPic: UIImage
     var rating: String
 
-    init(username: String, date: String, comment: String, foodPic: String, rating: String) {
+    init(username: String, date: String, comment: String, foodPic: UIImage, rating: String) {
         self.username = username
         self.date = date
         self.comment = comment

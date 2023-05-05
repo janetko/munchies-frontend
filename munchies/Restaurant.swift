@@ -9,10 +9,12 @@ class Restaurant {
     var name: String
     var eatPicName: String
     var rating: String
+    var reviews: [Review]
     
-    init(name: String, eatPicName: String, rating: String) {
+    init(name: String, eatPicName: String, rating: String, reviews: [Review]) {
         self.name = name
         self.eatPicName = eatPicName
         self.rating = rating
+        self.reviews = reviews
     }
 }

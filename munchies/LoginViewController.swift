@@ -17,11 +17,21 @@ class LoginViewController: UIViewController {
     let passwordLabel = UILabel()
     let passwordField = UITextField()
     let loginButton = UIButton()
+    let failLabel = UILabel()
+    var user1 = User(username: "janetko", password: "monkey", email: "jko37@cornell.edu")
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 240/255, green: 137/255, blue: 128/255, alpha: 1)
+        
+        // Remove UINavBar background color
+        let app = UINavigationBarAppearance()
+        app.configureWithTransparentBackground()
+        self.navigationController?.navigationBar.standardAppearance = app
+        self.navigationController?.navigationBar.scrollEdgeAppearance = app
+        self.navigationController?.navigationBar.compactAppearance = app
 
         // Do any additional setup after loading the view.
         header.image = UIImage(named: "header1")
@@ -85,6 +95,13 @@ class LoginViewController: UIViewController {
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loginButton)
         
+        failLabel.textColor = .clear
+        failLabel.font = UIFont(name: "Lato-Bold", size: 22)
+        failLabel.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
+        failLabel.text = "Login Failed"
+        failLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(failLabel)
+        
         
         footer.image = UIImage(named: "footer")
         footer.backgroundColor = .clear
@@ -138,6 +155,11 @@ class LoginViewController: UIViewController {
             loginButton.heightAnchor.constraint(equalToConstant: 60)
         ])
         
+        NSLayoutConstraint.activate([
+            failLabel.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 3),
+            failLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+        
         
         NSLayoutConstraint.activate([
             footer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -146,7 +168,18 @@ class LoginViewController: UIViewController {
     }
     
     @objc func loginButtonTapped() {
-            let restaurantVC = RestaurantViewController()
+            
+        let username = usernameField.text
+        let password = passwordField.text
+
+        if username == user1.username && password == user1.password {
+            usernameField.text = ""
+            passwordField.text = ""
+            failLabel.textColor = .clear
+            let restaurantVC = RestaurantViewController(user: self.user1)
             navigationController?.pushViewController(restaurantVC, animated: true)
+        } else {
+            failLabel.textColor = .red
+        }
     }
 }

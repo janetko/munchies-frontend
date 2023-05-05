@@ -15,14 +15,27 @@ class RestaurantViewController: UIViewController {
     let currUserLabel = UILabel()
     let logoutButton = UIButton()
     
-//    let heading = UILabel()
+    let user: User
     
-    let restaurants = [
-        Restaurant(name: "Trillium", eatPicName: "trillium", rating: "stars5"),
-        Restaurant(name: "Bear Necessities", eatPicName: "bear_necessities", rating: "stars4"),
-        Restaurant(name: "Jansen's Market", eatPicName: "jansens", rating: "stars3"),
-        Restaurant(name: "Bus Stop Bagels", eatPicName: "bus_stop", rating: "stars2")
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    var reviews: [Review] = [
+        Review(username: "janetko", date: "1/2/23", comment: "food is great!", foodPic: UIImage(named:"foodpic1")!, rating: "stars5"),
+        Review(username: "emmando", date: "2/2/23", comment: "yum! so many options. I love this place!", foodPic: UIImage(named:"foodpic2")!, rating: "stars4"),
+        Review(username: "andrefo", date: "4/3/23", comment: "food is bland", foodPic: UIImage(named:"foodpic3")!, rating: "stars1"),
+        Review(username: "elvisma", date: "5/4/23", comment: "food is good!", foodPic: UIImage(named:"foodpic4")!, rating: "stars3")
     ]
+    
+    var restaurants: [Restaurant] = []
+    
+    
     
     var restaurantCollectionView: UICollectionView!
 
@@ -31,7 +44,20 @@ class RestaurantViewController: UIViewController {
         navigationItem.hidesBackButton = true
         view.backgroundColor = UIColor(red: 240/255, green: 137/255, blue: 128/255, alpha: 1)
         
-//        title = "Munchies"
+        restaurants = [
+            Restaurant(name: "Trillium", eatPicName: "trillium", rating: "stars5", reviews: reviews),
+            Restaurant(name: "Bear Necessities", eatPicName: "bear_necessities", rating: "stars4", reviews: reviews),
+            Restaurant(name: "Jansen's Market", eatPicName: "jansens", rating: "stars3", reviews: reviews),
+            Restaurant(name: "Bus Stop Bagels", eatPicName: "bus_stop", rating: "stars2", reviews: reviews)
+        ]
+        
+        // Remove UINavBar background color
+        let app = UINavigationBarAppearance()
+        app.configureWithTransparentBackground()
+        self.navigationController?.navigationBar.standardAppearance = app
+        self.navigationController?.navigationBar.scrollEdgeAppearance = app
+        self.navigationController?.navigationBar.compactAppearance = app
+        
         
         let restaurantFlowLayout = UICollectionViewFlowLayout()
         restaurantFlowLayout.scrollDirection = .vertical
@@ -39,6 +65,8 @@ class RestaurantViewController: UIViewController {
         
         restaurantCollectionView = UICollectionView(frame: .zero, collectionViewLayout: restaurantFlowLayout)
         restaurantCollectionView.register(RestaurantCollectionViewCell.self, forCellWithReuseIdentifier: "RestaurantCell")
+        
+        restaurantCollectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 50, right: 0)
         
         restaurantCollectionView.backgroundColor = .clear
         restaurantCollectionView.dataSource = self
@@ -57,15 +85,8 @@ class RestaurantViewController: UIViewController {
         footer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(footer)
         
-//        heading.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
-//        heading.backgroundColor = .clear
-//        heading.font = UIFont(name: "Lato-Bold", size: 35)
-//        heading.font = UIFont.systemFont(ofSize: 28, weight: .semibold)
-//        heading.text = "Dining Halls"
-//        heading.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(heading)
-
-        currUserLabel.text = "Hi, janetko!"
+        
+        currUserLabel.text = "Hi, " + user.username + "!"
         currUserLabel.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
         currUserLabel.backgroundColor = .clear
         currUserLabel.font = UIFont(name: "Lato-Bold", size: 20)
@@ -127,7 +148,7 @@ class RestaurantViewController: UIViewController {
     }
     
     func showReviews(for restaurant: Restaurant) {
-            let reviewsViewController = ReviewViewController(restaurant: restaurant)
+        let reviewsViewController = ReviewViewController(restaurant: restaurant, user: self.user)
             navigationController?.pushViewController(reviewsViewController, animated: true)
         }
     
@@ -175,6 +196,7 @@ extension RestaurantViewController: UICollectionViewDelegateFlowLayout {
         let restaurant = restaurants[indexPath.row]
        showReviews(for: restaurant)
     }
+    
 
 }
 

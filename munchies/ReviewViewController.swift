@@ -17,21 +17,18 @@ class ReviewViewController: UIViewController {
     let reviewButton = UIButton()
 
     let restaurant: Restaurant
-    var reviews: [Review] = [
-        Review(username: "janetko", date: "1/2/23", comment: "food is great!", foodPic: "foodpic1", rating: "stars5"),
-        Review(username: "emmando", date: "2/2/23", comment: "yum! so many options. I love this place!", foodPic: "foodpic2", rating: "stars4"),
-        Review(username: "andrefo", date: "4/3/23", comment: "food is bland", foodPic: "foodpic3", rating: "stars1"),
-        Review(username: "elvisma", date: "5/4/23", comment: "food is good!", foodPic: "foodpic4", rating: "stars3")
-    ]
+    
+    let user: User
 
-    init(restaurant: Restaurant) {
+    init(restaurant: Restaurant, user: User) {
         self.restaurant = restaurant
+        self.user = user
         super.init(nibName: nil, bundle: nil)
     }
 
-    init(review: Review) {
-        self.restaurant = Restaurant(name: "", eatPicName: "", rating: "")
-        self.reviews = [review]
+    init(review: Review, user: User) {
+        self.restaurant = Restaurant(name: "", eatPicName: "", rating: "", reviews: [])
+        self.user = user
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -47,12 +44,23 @@ class ReviewViewController: UIViewController {
         navigationItem.hidesBackButton = true
         view.backgroundColor = UIColor(red: 240/255, green: 137/255, blue: 128/255, alpha: 1)
         
+        // Remove UINavBar background color
+        let app = UINavigationBarAppearance()
+        app.configureWithTransparentBackground()
+        self.navigationController?.navigationBar.standardAppearance = app
+        self.navigationController?.navigationBar.scrollEdgeAppearance = app
+        self.navigationController?.navigationBar.compactAppearance = app
+        
         let reviewFlowLayout = UICollectionViewFlowLayout()
         reviewFlowLayout.scrollDirection = .vertical
         reviewFlowLayout.minimumLineSpacing = 10
-    
+        
+//        reviewCollectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 50, right: 0)
         reviewCollectionView = UICollectionView(frame: .zero, collectionViewLayout: reviewFlowLayout)
         reviewCollectionView.register(ReviewCollectionViewCell.self, forCellWithReuseIdentifier: "ReviewCell")
+        
+        reviewCollectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 50, right: 0)
+
         reviewCollectionView.backgroundColor = .clear
         reviewCollectionView.dataSource = self
         reviewCollectionView.delegate = self
@@ -64,19 +72,20 @@ class ReviewViewController: UIViewController {
         header.backgroundColor = .clear
         view.addSubview(header)
 
-
+        heading.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
+        heading.backgroundColor = .clear
+        heading.font = UIFont(name: "ChelseaMarket-Regular", size: 50)
+        heading.font = UIFont.systemFont(ofSize: 40, weight: .semibold)
+        heading.text = restaurant.name
+        heading.textAlignment = .center
+        heading.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(heading)
+        
         footer.image = UIImage(named: "footer")
         footer.backgroundColor = .clear
         footer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(footer)
         
-        heading.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
-        heading.backgroundColor = .clear
-        heading.font = UIFont(name: "Lato-Bold", size: 35)
-        heading.font = UIFont.systemFont(ofSize: 28, weight: .semibold)
-        heading.text = "Trillium"
-        heading.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(heading)
         
         backButton.setTitle("< Back", for: .normal)
         backButton.setTitleColor(UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1), for: .normal)
@@ -113,16 +122,16 @@ class ReviewViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            reviewCollectionView.topAnchor.constraint(equalTo: heading.bottomAnchor, constant: 10),
+            reviewCollectionView.topAnchor.constraint(equalTo: header.bottomAnchor, constant: -39),
             reviewCollectionView.bottomAnchor.constraint(equalTo: footer.topAnchor, constant: 39),
             reviewCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             reviewCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            heading.topAnchor.constraint(equalTo: header.bottomAnchor),
-            heading.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 23),
-            heading.widthAnchor.constraint(equalToConstant: 196),
+            heading.topAnchor.constraint(equalTo: header.bottomAnchor, constant: -92),
+            heading.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            heading.widthAnchor.constraint(equalToConstant: 390),
             heading.heightAnchor.constraint(equalToConstant: 48)
         ])
         
@@ -137,8 +146,9 @@ class ReviewViewController: UIViewController {
         ])
     }
     
+    
     @objc func reviewButtonTapped() {
-            let writeReviewVC = WriteReviewViewController()
+        let writeReviewVC = WriteReviewViewController(restaurant: self.restaurant, user: self.user, delegate: self)
             navigationController?.pushViewController(writeReviewVC, animated: true)
     }
     
@@ -147,18 +157,20 @@ class ReviewViewController: UIViewController {
               navigationController?.popToViewController(restaurantVC, animated: true)
           }
       }
+    
+    
 
 }
 
 extension ReviewViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return reviews.count
+        return restaurant.reviews.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = reviewCollectionView.dequeueReusableCell(withReuseIdentifier: "ReviewCell", for: indexPath) as! ReviewCollectionViewCell
-        let review = reviews[indexPath.row]
+        let review = restaurant.reviews[indexPath.row]
             
         cell.configure(with: review)
     
@@ -179,3 +191,8 @@ extension ReviewViewController: UICollectionViewDelegateFlowLayout {
 
 }
 
+extension ReviewViewController: ReloadViewDelegate {
+    func reloadView() {
+        reviewCollectionView.reloadData()
+    }    
+}
