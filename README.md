@@ -3,6 +3,7 @@ Cornell's Dining Hall Review App (Hack Challenge '23)
 
 
 5/5/23 update
+
 ![Gif](https://github.com/janetko/munchies-frontend/blob/main/update.gif)
 
 
