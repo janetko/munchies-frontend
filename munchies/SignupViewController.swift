@@ -1,42 +1,48 @@
 //
-//  LoginViewController.swift
+//  SignupViewController.swift
 //  munchies
 //
-//  Created by Janet Olowe on 5/3/23.
+//  Created by Janet Olowe on 5/6/23.
 //
 
 import UIKit
 
-class LoginViewController: UIViewController {
-    
+class SignupViewController: UIViewController {
+
     let header = UIImageView()
     let footer = UIImageView()
     let infoLabel = UILabel()
+    let emailLabel = UILabel()
+    let emailField = UITextField()
     let usernameLabel = UILabel()
     let usernameField = UITextField()
     let passwordLabel = UILabel()
     let passwordField = UITextField()
-    let loginButton = UIButton()
     let signupButton = UIButton()
+    let backButton = UIButton()
+
     let failLabel = UILabel()
     
     var users: [User]
+    
+    weak var delegate: SignupDelegate?
 
-    init(users: [User]) {
+    init(users: [User], delegate: SignupDelegate) {
         self.users = users
+        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+        
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 240/255, green: 137/255, blue: 128/255, alpha: 1)
         navigationItem.hidesBackButton = true
 
-        
         
         // Remove UINavBar background color
         let app = UINavigationBarAppearance()
@@ -51,15 +57,41 @@ class LoginViewController: UIViewController {
         header.backgroundColor = .clear
         view.addSubview(header)
         
+        footer.image = UIImage(named: "footer")
+        footer.backgroundColor = .clear
+        footer.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(footer)
+        
         infoLabel.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
         infoLabel.font = UIFont(name: "Lato-Bold", size: 32)
         infoLabel.font = UIFont.systemFont(ofSize: 32, weight: .semibold)
         infoLabel.numberOfLines = 0
         infoLabel.lineBreakMode = .byWordWrapping
         infoLabel.textAlignment = .center
-        infoLabel.text = "Cornell’s #1\nDining Review\nApp"
+        infoLabel.text = "Create an Account"
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(infoLabel)
+        
+        
+        emailLabel.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
+        emailLabel.font = UIFont(name: "Lato-Bold", size: 22)
+        emailLabel.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
+        emailLabel.text = "Email"
+        emailLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(emailLabel)
+        
+        let paddingView1 = UIView(frame: CGRect(x: 0, y: 0, width: 18, height: emailField.frame.height))
+        emailField.leftView = paddingView1
+        emailField.leftViewMode = .always
+        emailField.autocapitalizationType = .none
+        emailField.autocorrectionType = .no
+        emailField.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
+        emailField.font = UIFont(name: "Lato-Bold", size: 22)
+        emailField.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
+        emailField.layer.backgroundColor = UIColor(red: 0.753, green: 0.11, blue: 0.176, alpha: 0.26).cgColor
+        emailField.layer.cornerRadius = 22.2
+        emailField.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(emailField)
         
         usernameLabel.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
         usernameLabel.font = UIFont(name: "Lato-Bold", size: 22)
@@ -68,8 +100,8 @@ class LoginViewController: UIViewController {
         usernameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(usernameLabel)
         
-        let paddingView1 = UIView(frame: CGRect(x: 0, y: 0, width: 18, height: usernameField.frame.height))
-        usernameField.leftView = paddingView1
+        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 18, height: usernameField.frame.height))
+        usernameField.leftView = paddingView2
         usernameField.leftViewMode = .always
         usernameField.autocapitalizationType = .none
         usernameField.autocorrectionType = .no
@@ -88,8 +120,8 @@ class LoginViewController: UIViewController {
         passwordLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(passwordLabel)
         
-        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 18, height: passwordField.frame.height))
-        passwordField.leftView = paddingView2
+        let paddingView3 = UIView(frame: CGRect(x: 0, y: 0, width: 18, height: passwordField.frame.height))
+        passwordField.leftView = paddingView3
         passwordField.leftViewMode = .always
         passwordField.autocapitalizationType = .none
         passwordField.autocorrectionType = .no
@@ -102,32 +134,29 @@ class LoginViewController: UIViewController {
         passwordField.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(passwordField)
         
-        loginButton.setImage(UIImage(named: "login-button"), for: .normal)
-        loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
-        loginButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(loginButton)
+        signupButton.setImage(UIImage(named: "signup-button"), for: .normal)
+        signupButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
+        signupButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(signupButton)
         
         failLabel.isHidden = true
         failLabel.textColor = .red
         failLabel.font = UIFont(name: "Lato-Bold", size: 22)
         failLabel.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
-        failLabel.text = "Login Failed"
+        failLabel.text = "signup Failed"
         failLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(failLabel)
         
-        footer.image = UIImage(named: "footer")
-        footer.backgroundColor = .clear
-        footer.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(footer)
+        backButton.setTitle("< Back", for: .normal)
+        backButton.setTitleColor(UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1), for: .normal)
+        backButton.backgroundColor = .clear
+        backButton.titleLabel?.font = UIFont(name: "Lato-Bold", size: 20)
+        backButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(backButton)
         
-        signupButton.setTitle("Sign Up", for: .normal)
-        signupButton.setTitleColor(UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1), for: .normal)
-        signupButton.backgroundColor = .clear
-        signupButton.titleLabel?.font = UIFont(name: "Lato-Bold", size: 20)
-        signupButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        signupButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
-        signupButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(signupButton)
+
         
         setupConstraints()
 
@@ -141,12 +170,26 @@ class LoginViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            infoLabel.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 12),
-            infoLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            infoLabel.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 8),
+            infoLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            infoLabel.widthAnchor.constraint(equalToConstant: 348),
+            infoLabel.heightAnchor.constraint(equalToConstant: 47)
         ])
         
         NSLayoutConstraint.activate([
-            usernameLabel.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 12),
+            emailLabel.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 10),
+            emailLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 38)
+        ])
+    
+        NSLayoutConstraint.activate([
+            emailField.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 6),
+            emailField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emailField.widthAnchor.constraint(equalToConstant: 318),
+            emailField.heightAnchor.constraint(equalToConstant: 60)
+        ])
+        
+        NSLayoutConstraint.activate([
+            usernameLabel.topAnchor.constraint(equalTo: emailField.bottomAnchor, constant: 10),
             usernameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 38)
         ])
     
@@ -158,7 +201,7 @@ class LoginViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            passwordLabel.topAnchor.constraint(equalTo: usernameField.bottomAnchor, constant: 12),
+            passwordLabel.topAnchor.constraint(equalTo: usernameField.bottomAnchor, constant: 10),
             passwordLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 38)
         ])
     
@@ -170,14 +213,14 @@ class LoginViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            loginButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 21),
-            loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginButton.widthAnchor.constraint(equalToConstant: 302),
-            loginButton.heightAnchor.constraint(equalToConstant: 60)
+            signupButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 12),
+            signupButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            signupButton.widthAnchor.constraint(equalToConstant: 302),
+            signupButton.heightAnchor.constraint(equalToConstant: 60)
         ])
         
         NSLayoutConstraint.activate([
-            failLabel.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 3),
+            failLabel.topAnchor.constraint(equalTo: signupButton.bottomAnchor, constant: 3),
             failLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
@@ -188,59 +231,35 @@ class LoginViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            signupButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
-            signupButton.bottomAnchor.constraint(equalTo: footer.bottomAnchor, constant: -36)
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
+            backButton.bottomAnchor.constraint(equalTo: footer.bottomAnchor, constant: -36)
         ])
     }
     
     @objc func signupButtonTapped() {
-        let signupVC = SignupViewController(users: self.users)
-            navigationController?.pushViewController(signupVC, animated: true)
-    }
-    
-    @objc func loginButtonTapped() {
-        
-        // if user in users, currUser = user
-        // if currUser.username and currUser.password match inputs login in curruser
-        
             
-        let username = usernameField.text
-        let password = passwordField.text
+        let username = usernameField.text!
+        let password = passwordField.text!
+        let email = emailField.text!
         
-        var currUser = User(username: "none", password: "none", email: "none")
+        let newUser = User(username: username, password: password, email: email)
+        users.append(newUser)
         
-        for user in users {
-            if user.username == username {
-                currUser = user
-                break
-            }
-        }
-
-        if username == currUser.username && password == currUser.password {
-            usernameField.text = ""
-            passwordField.text = ""
-            failLabel.isHidden = true
-            let restaurantVC = RestaurantViewController(user: currUser)
-            navigationController?.pushViewController(restaurantVC, animated: true)
-        } else {
-            failLabel.isHidden = false
+        NetworkManager.shared.createUser(email: email, password: password, username: username) { response in
         }
         
-        
-//        var found: Bool = false
-//
-//        NetworkManager.shared.login(username: usernameField.text!, password: passwordField.text!) { response in
-//            if (response != nil) {
-//                found = true
-//                print("yep")
-//            }
-//            if (!found) {
-//                self.failLabel.isHidden = false
-//                return
-//            }
-//
-//            let restaurantVC = RestaurantViewController(user: self.user1)
-//            self.navigationController?.pushViewController(restaurantVC, animated: true)
-//        }
+        let loginVC = LoginViewController(users: self.users)
+            navigationController?.pushViewController(loginVC, animated: true)
+        }
+    
+    @objc func backButtonTapped() {
+        if let loginVC = navigationController?.viewControllers.first(where: { $0 is LoginViewController }) {
+            navigationController?.popToViewController(loginVC, animated: true)
+        }
     }
 }
+
+
+//protocol SignupDelegate: UIViewController {
+//    func signup(email: String, password: String, username: String)
+//}

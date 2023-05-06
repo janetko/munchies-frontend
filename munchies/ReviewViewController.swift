@@ -55,7 +55,6 @@ class ReviewViewController: UIViewController {
         reviewFlowLayout.scrollDirection = .vertical
         reviewFlowLayout.minimumLineSpacing = 10
         
-//        reviewCollectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 50, right: 0)
         reviewCollectionView = UICollectionView(frame: .zero, collectionViewLayout: reviewFlowLayout)
         reviewCollectionView.register(ReviewCollectionViewCell.self, forCellWithReuseIdentifier: "ReviewCell")
         
@@ -182,7 +181,10 @@ extension ReviewViewController: UICollectionViewDataSource {
             
         cell.configure(with: review)
         
-        cell.deleteButton.addTarget(self, action: #selector(deleteButtonTapped(_:)), for: .touchUpInside)
+        if user.username == cell.usernameLabel.text {
+            cell.deleteButton.isHidden = false
+            cell.deleteButton.addTarget(self, action: #selector(deleteButtonTapped(_:)), for: .touchUpInside)
+        }
 
     
         return cell

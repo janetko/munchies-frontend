@@ -148,7 +148,6 @@ class WriteReviewViewController: UIViewController {
         ratingSlider.maximumValue = 5.99
         ratingSlider.value = 3
         ratingSlider.minimumTrackTintColor = .black
-//        ratingSlider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
         ratingSlider.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(ratingSlider)
         

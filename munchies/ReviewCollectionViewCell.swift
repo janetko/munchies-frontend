@@ -39,6 +39,7 @@ class ReviewCollectionViewCell: UICollectionViewCell {
         rating.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(rating)
         
+        deleteButton.isHidden = true
         deleteButton.setImage(UIImage(named: "delete-button"), for: .normal)
         deleteButton.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(deleteButton)
@@ -120,10 +121,6 @@ class ReviewCollectionViewCell: UICollectionViewCell {
         commentLabel.text = review.comment
         foodPicView.image = UIImage(data: review.foodPicData)
         rating.image = UIImage(named: review.rating)
-        
-//        if review.username == review.username {
-//            contentView.addSubview(deleteButton)
-//        }
     }
     
 }

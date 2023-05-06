@@ -30,9 +30,7 @@ class RestaurantViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-//    UIImagePNGRepresentation(UIImage(named:"foodpic1"))
-    
+        
     var reviews: [Review] = [
         Review(username: "janetko", date: "1/2/23", comment: "food is great!", foodPic: UIImage(named:"foodpic1")!, rating: "stars5"),
         Review(username: "emmando", date: "2/2/23", comment: "yum! so many options. I love this place!", foodPic: UIImage(named:"foodpic2")!, rating: "stars4"),
@@ -123,7 +121,7 @@ class RestaurantViewController: UIViewController {
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(logoutButton)
         
-        createDummyData()
+        createData()
         setupConstraints()
     }
     
@@ -160,7 +158,7 @@ class RestaurantViewController: UIViewController {
         
     }
     
-    func createDummyData() {
+    func createData() {
         
 //        NetworkManager.shared.getAllRestaurants { restaurants in
 //            DispatchQueue.main.sync {

@@ -8,26 +8,6 @@
 import Foundation
 import UIKit
 
-//struct Review {
-//    var username: String
-//    var date: String
-//    var comment: String
-//    var foodPic: UIImage // this is the problem
-//    var rating: String
-//
-//    init(username: String, date: String, comment: String, foodPic: UIImage, rating: String) {
-//        self.username = username
-//        self.date = date
-//        self.comment = comment
-//        self.foodPic = foodPic
-//        self.rating = rating
-//    }
-//}
-//
-//struct ReviewResponse: Codable {
-//    var reviews: [Review]
-//}
-
 
 struct Review: Codable {
     var username: String
