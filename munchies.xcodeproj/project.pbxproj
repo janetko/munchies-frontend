@@ -10,6 +10,8 @@
 		3662EB502A0345E100D20D63 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3662EB4F2A0345E100D20D63 /* LoginViewController.swift */; };
 		3662EB522A03ABDA00D20D63 /* WriteReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3662EB512A03ABDA00D20D63 /* WriteReviewViewController.swift */; };
 		3662EB542A04A18A00D20D63 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3662EB532A04A18A00D20D63 /* User.swift */; };
+		3662EB562A05956F00D20D63 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3662EB552A05956E00D20D63 /* NetworkManager.swift */; };
+		3662EB582A059E6500D20D63 /* SessionToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3662EB572A059E6500D20D63 /* SessionToken.swift */; };
 		36C6BA4029FF6AAC00CDDAB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA3F29FF6AAC00CDDAB9 /* AppDelegate.swift */; };
 		36C6BA4229FF6AAC00CDDAB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA4129FF6AAC00CDDAB9 /* SceneDelegate.swift */; };
 		36C6BA4429FF6AAC00CDDAB9 /* RestaurantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C6BA4329FF6AAC00CDDAB9 /* RestaurantViewController.swift */; };
@@ -28,6 +30,8 @@
 		3662EB4F2A0345E100D20D63 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3662EB512A03ABDA00D20D63 /* WriteReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteReviewViewController.swift; sourceTree = "<group>"; };
 		3662EB532A04A18A00D20D63 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		3662EB552A05956E00D20D63 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		3662EB572A059E6500D20D63 /* SessionToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionToken.swift; sourceTree = "<group>"; };
 		36C6BA3C29FF6AAC00CDDAB9 /* munchies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = munchies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36C6BA3F29FF6AAC00CDDAB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		36C6BA4129FF6AAC00CDDAB9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -85,6 +89,8 @@
 				36C6BA6229FF7BC900CDDAB9 /* ReviewViewController.swift */,
 				36C6BA6429FF7E6B00CDDAB9 /* ReviewCollectionViewCell.swift */,
 				3662EB512A03ABDA00D20D63 /* WriteReviewViewController.swift */,
+				3662EB572A059E6500D20D63 /* SessionToken.swift */,
+				3662EB552A05956E00D20D63 /* NetworkManager.swift */,
 				36C6BA4529FF6AAC00CDDAB9 /* Main.storyboard */,
 				36C6BA4B29FF6AB000CDDAB9 /* Assets.xcassets */,
 				36C6BA4D29FF6AB000CDDAB9 /* LaunchScreen.storyboard */,
@@ -168,12 +174,14 @@
 				36C6BA4429FF6AAC00CDDAB9 /* RestaurantViewController.swift in Sources */,
 				36C6BA5D29FF6D3500CDDAB9 /* Review.swift in Sources */,
 				36C6BA5F29FF745C00CDDAB9 /* Restaurant.swift in Sources */,
+				3662EB562A05956F00D20D63 /* NetworkManager.swift in Sources */,
 				3662EB522A03ABDA00D20D63 /* WriteReviewViewController.swift in Sources */,
 				36C6BA4A29FF6AAC00CDDAB9 /* munchies.xcdatamodeld in Sources */,
 				36C6BA4029FF6AAC00CDDAB9 /* AppDelegate.swift in Sources */,
 				36C6BA6129FF753500CDDAB9 /* RestaurantCollectionViewCell.swift in Sources */,
 				36C6BA6329FF7BC900CDDAB9 /* ReviewViewController.swift in Sources */,
 				3662EB542A04A18A00D20D63 /* User.swift in Sources */,
+				3662EB582A059E6500D20D63 /* SessionToken.swift in Sources */,
 				36C6BA6529FF7E6B00CDDAB9 /* ReviewCollectionViewCell.swift in Sources */,
 				3662EB502A0345E100D20D63 /* LoginViewController.swift in Sources */,
 				36C6BA4229FF6AAC00CDDAB9 /* SceneDelegate.swift in Sources */,

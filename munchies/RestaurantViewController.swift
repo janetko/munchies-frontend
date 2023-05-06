@@ -15,6 +15,11 @@ class RestaurantViewController: UIViewController {
     let currUserLabel = UILabel()
     let logoutButton = UIButton()
     
+    let refreshControl = UIRefreshControl()
+    
+    var restaurantsData: [Restaurant] = []
+    var shownRestaurantsData: [Restaurant] = []
+    
     let user: User
     
     init(user: User) {
@@ -25,6 +30,8 @@ class RestaurantViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+//    UIImagePNGRepresentation(UIImage(named:"foodpic1"))
     
     var reviews: [Review] = [
         Review(username: "janetko", date: "1/2/23", comment: "food is great!", foodPic: UIImage(named:"foodpic1")!, rating: "stars5"),
@@ -43,6 +50,10 @@ class RestaurantViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
         view.backgroundColor = UIColor(red: 240/255, green: 137/255, blue: 128/255, alpha: 1)
+        
+        var url = URL(string: "http://34.85.222.240/")!
+        let formatParameter = URLQueryItem(name: "dining_halls", value: "json")
+        url.append(queryItems: [formatParameter])
         
         restaurants = [
             Restaurant(name: "Trillium", eatPicName: "trillium", rating: "stars5", reviews: reviews),
@@ -74,6 +85,15 @@ class RestaurantViewController: UIViewController {
         restaurantCollectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(restaurantCollectionView)
         
+        //TODO: #1.5 Setup refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+
+        if #available(iOS 10.0, *) {
+            restaurantCollectionView.refreshControl = refreshControl
+        } else {
+            restaurantCollectionView.addSubview(refreshControl)
+        }
+        
         header.image = UIImage(named: "header2")
         header.translatesAutoresizingMaskIntoConstraints = false
         header.backgroundColor = .clear
@@ -103,6 +123,7 @@ class RestaurantViewController: UIViewController {
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(logoutButton)
         
+        createDummyData()
         setupConstraints()
     }
     
@@ -113,12 +134,6 @@ class RestaurantViewController: UIViewController {
             header.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
-//        NSLayoutConstraint.activate([
-//            heading.topAnchor.constraint(equalTo: header.bottomAnchor),
-//            heading.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 21),
-//            heading.widthAnchor.constraint(equalToConstant: 196),
-//            heading.heightAnchor.constraint(equalToConstant: 48)
-//        ])
         
         NSLayoutConstraint.activate([
             footer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -143,8 +158,23 @@ class RestaurantViewController: UIViewController {
             logoutButton.bottomAnchor.constraint(equalTo: footer.bottomAnchor, constant: -36)
         ])
         
+    }
+    
+    func createDummyData() {
         
+//        NetworkManager.shared.getAllRestaurants { restaurants in
+//            DispatchQueue.main.sync {
+//                self.shownRestaurantsData = restaurants
+//                self.restaurantCollectionView.reloadData()
+//            }
+//        }
         
+        shownRestaurantsData = [
+            Restaurant(name: "Trillium", eatPicName: "trillium", rating: "stars5", reviews: reviews),
+            Restaurant(name: "Bear Necessities", eatPicName: "bear_necessities", rating: "stars4", reviews: reviews),
+            Restaurant(name: "Jansen's Market", eatPicName: "jansens", rating: "stars3", reviews: reviews),
+            Restaurant(name: "Bus Stop Bagels", eatPicName: "bus_stop", rating: "stars2", reviews: reviews)
+        ]
     }
     
     func showReviews(for restaurant: Restaurant) {
@@ -157,18 +187,33 @@ class RestaurantViewController: UIViewController {
               navigationController?.popToViewController(loginVC, animated: true)
           }
       }
+    
+    @objc func refreshData() {
+        //TODO: Refresh Data
+        
+        NetworkManager.shared.getAllRestaurants { restaurants in
+            DispatchQueue.main.sync {
+                self.shownRestaurantsData = restaurants
+                self.restaurantCollectionView.reloadData()
+                self.refreshControl.endRefreshing()
+            }
+        }
+    }
 
 }
 
 extension RestaurantViewController: UICollectionViewDataSource {
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return restaurants.count
+//        return restaurants.count
+        return shownRestaurantsData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = restaurantCollectionView.dequeueReusableCell(withReuseIdentifier: "RestaurantCell", for: indexPath) as! RestaurantCollectionViewCell
-        let restaurant = restaurants[indexPath.row]
+//        let restaurant = restaurants[indexPath.row]
+        let restaurant = shownRestaurantsData[indexPath.row]
+        
             
         cell.configure(with: restaurant)
         cell.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor

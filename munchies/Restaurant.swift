@@ -5,7 +5,8 @@
 //  Created by Janet Olowe on 4/30/23.
 //
 
-class Restaurant {
+
+struct Restaurant: Codable {
     var name: String
     var eatPicName: String
     var rating: String
@@ -18,3 +19,9 @@ class Restaurant {
         self.reviews = reviews
     }
 }
+
+struct RestaurantResponse: Codable {
+    var restaurants: [Restaurant]
+}
+
+

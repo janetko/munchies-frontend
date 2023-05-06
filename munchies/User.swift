@@ -7,7 +7,7 @@
 
 import Foundation
 
-class User {
+struct User: Codable {
     var username: String
     var password: String
     var email: String
@@ -18,3 +18,9 @@ class User {
         self.email = email
     }
 }
+
+
+struct UserResponse: Codable {
+    var user: [User]
+}
+

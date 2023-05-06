@@ -17,6 +17,7 @@ class ReviewCollectionViewCell: UICollectionViewCell {
     let commentLabel = UILabel()
     let foodPicView = UIImageView()
     let rating = UIImageView()
+    let deleteButton = UIButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,6 +39,10 @@ class ReviewCollectionViewCell: UICollectionViewCell {
         rating.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(rating)
         
+        deleteButton.setImage(UIImage(named: "delete-button"), for: .normal)
+        deleteButton.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(deleteButton)
+        
         commentLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         commentLabel.translatesAutoresizingMaskIntoConstraints = false
         commentLabel.numberOfLines = 0
@@ -50,7 +55,12 @@ class ReviewCollectionViewCell: UICollectionViewCell {
         foodPicView.clipsToBounds = true
         contentView.addSubview(foodPicView)
         
+        
         setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func setupConstraints() {
@@ -97,20 +107,25 @@ class ReviewCollectionViewCell: UICollectionViewCell {
             foodPicView.heightAnchor.constraint(equalToConstant: 95),
         ])
         
+        NSLayoutConstraint.activate([
+            deleteButton.topAnchor.constraint(equalTo: reviewBox.bottomAnchor, constant: -25)
+        ])
         
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        
     }
     
     func configure(with review: Review) {
         usernameLabel.text = review.username
         dateLabel.text = review.date
         commentLabel.text = review.comment
-        foodPicView.image = review.foodPic
+        foodPicView.image = UIImage(data: review.foodPicData)
         rating.image = UIImage(named: review.rating)
+        
+//        if review.username == review.username {
+//            contentView.addSubview(deleteButton)
+//        }
     }
+    
 }
 
 

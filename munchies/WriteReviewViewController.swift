@@ -50,7 +50,7 @@ class WriteReviewViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
         view.backgroundColor = UIColor(red: 240/255, green: 137/255, blue: 128/255, alpha: 1)
-        
+                
         imagePicker.sourceType = .photoLibrary
         imagePicker.delegate = self
 

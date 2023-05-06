@@ -16,7 +16,7 @@ class ReviewViewController: UIViewController {
     let backButton = UIButton()
     let reviewButton = UIButton()
 
-    let restaurant: Restaurant
+    var restaurant: Restaurant
     
     let user: User
 
@@ -158,6 +158,14 @@ class ReviewViewController: UIViewController {
           }
       }
     
+    @objc func deleteButtonTapped(_ sender: UIButton) {
+        let point = sender.convert(CGPoint.zero, to: reviewCollectionView)
+        if let indexPath = reviewCollectionView.indexPathForItem(at: point) {
+            // handle deletion of cell at indexPath
+            self.deleteCell(at: indexPath)
+
+        }
+    }
     
 
 }
@@ -173,9 +181,17 @@ extension ReviewViewController: UICollectionViewDataSource {
         let review = restaurant.reviews[indexPath.row]
             
         cell.configure(with: review)
+        
+        cell.deleteButton.addTarget(self, action: #selector(deleteButtonTapped(_:)), for: .touchUpInside)
+
     
         return cell
     }
+    
+    func deleteCell(at indexPath: IndexPath) {
+            restaurant.reviews.remove(at: indexPath.row)
+            reviewCollectionView.deleteItems(at: [indexPath])
+        }
 }
 
 extension ReviewViewController: UICollectionViewDelegateFlowLayout {

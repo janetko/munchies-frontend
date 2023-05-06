@@ -19,6 +19,7 @@ class LoginViewController: UIViewController {
     let loginButton = UIButton()
     let failLabel = UILabel()
     var user1 = User(username: "janetko", password: "monkey", email: "jko37@cornell.edu")
+//    var userData: [User] = []
 
     
     
