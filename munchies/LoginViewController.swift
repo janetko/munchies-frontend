@@ -200,10 +200,6 @@ class LoginViewController: UIViewController {
     
     @objc func loginButtonTapped() {
         
-        // if user in users, currUser = user
-        // if currUser.username and currUser.password match inputs login in curruser
-        
-            
         let username = usernameField.text
         let password = passwordField.text
         

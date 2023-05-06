@@ -160,19 +160,19 @@ class RestaurantViewController: UIViewController {
     
     func createData() {
         
-//        NetworkManager.shared.getAllRestaurants { restaurants in
-//            DispatchQueue.main.sync {
-//                self.shownRestaurantsData = restaurants
-//                self.restaurantCollectionView.reloadData()
-//            }
-//        }
+        NetworkManager.shared.getAllRestaurants { restaurants in
+            DispatchQueue.main.sync {
+                self.shownRestaurantsData = restaurants
+                self.restaurantCollectionView.reloadData()
+            }
+        }
         
-        shownRestaurantsData = [
-            Restaurant(name: "Trillium", eatPicName: "trillium", rating: "stars5", reviews: reviews),
-            Restaurant(name: "Bear Necessities", eatPicName: "bear_necessities", rating: "stars4", reviews: reviews),
-            Restaurant(name: "Jansen's Market", eatPicName: "jansens", rating: "stars3", reviews: reviews),
-            Restaurant(name: "Bus Stop Bagels", eatPicName: "bus_stop", rating: "stars2", reviews: reviews)
-        ]
+//        shownRestaurantsData = [
+//            Restaurant(name: "Trillium", eatPicName: "trillium", rating: "stars5", reviews: reviews),
+//            Restaurant(name: "Bear Necessities", eatPicName: "bear_necessities", rating: "stars4", reviews: reviews),
+//            Restaurant(name: "Jansen's Market", eatPicName: "jansens", rating: "stars3", reviews: reviews),
+//            Restaurant(name: "Bus Stop Bagels", eatPicName: "bus_stop", rating: "stars2", reviews: reviews)
+//        ]
     }
     
     func showReviews(for restaurant: Restaurant) {
