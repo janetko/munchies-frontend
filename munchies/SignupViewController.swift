@@ -25,11 +25,11 @@ class SignupViewController: UIViewController {
     
     var users: [User]
     
-    weak var delegate: SignupDelegate?
+//    weak var delegate: SignupDelegate?
 
-    init(users: [User], delegate: SignupDelegate) {
+    init(users: [User]) {
         self.users = users
-        self.delegate = delegate
+//        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
 
