@@ -18,6 +18,13 @@ class ReviewViewController: UIViewController {
 
     var restaurant: Restaurant
     
+    let refreshControl = UIRefreshControl()
+    
+    var hallid = 0
+    var reviewid = 0
+    
+//    var shownReviewsData: [Review] = []
+    
     let user: User
 
     init(restaurant: Restaurant, user: User) {
@@ -27,7 +34,7 @@ class ReviewViewController: UIViewController {
     }
 
     init(review: Review, user: User) {
-        self.restaurant = Restaurant(name: "", eatPicName: "", rating: "", reviews: [])
+        self.restaurant = Restaurant(name: "", eatPicName: "", rating: 0, hall_id: 0, reviews: [])
         self.user = user
         super.init(nibName: nil, bundle: nil)
     }
@@ -38,12 +45,11 @@ class ReviewViewController: UIViewController {
     
     var reviewCollectionView: UICollectionView!
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
         view.backgroundColor = UIColor(red: 240/255, green: 137/255, blue: 128/255, alpha: 1)
-        
+                
         // Remove UINavBar background color
         let app = UINavigationBarAppearance()
         app.configureWithTransparentBackground()
@@ -65,7 +71,7 @@ class ReviewViewController: UIViewController {
         reviewCollectionView.delegate = self
         reviewCollectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(reviewCollectionView)
-        
+                
         header.image = UIImage(named: "header3")
         header.translatesAutoresizingMaskIntoConstraints = false
         header.backgroundColor = .clear
@@ -84,6 +90,15 @@ class ReviewViewController: UIViewController {
         footer.backgroundColor = .clear
         footer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(footer)
+        
+        //TODO: #1.5 Setup refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        
+        if #available(iOS 10.0, *) {
+            reviewCollectionView.refreshControl = refreshControl
+        } else {
+            reviewCollectionView.addSubview(refreshControl)
+        }
         
         
         backButton.setTitle("< Back", for: .normal)
@@ -105,6 +120,7 @@ class ReviewViewController: UIViewController {
         view.addSubview(reviewButton)
 
         setupConstraints()
+        refreshData()
 
     }
 
@@ -152,6 +168,8 @@ class ReviewViewController: UIViewController {
     }
     
     @objc func backButtonTapped() {
+        NetworkManager.shared.getAllRestaurants { restaurants in
+        }
           if let restaurantVC = navigationController?.viewControllers.first(where: { $0 is RestaurantViewController }) {
               navigationController?.popToViewController(restaurantVC, animated: true)
           }
@@ -161,9 +179,33 @@ class ReviewViewController: UIViewController {
         let point = sender.convert(CGPoint.zero, to: reviewCollectionView)
         if let indexPath = reviewCollectionView.indexPathForItem(at: point) {
             // handle deletion of cell at indexPath
+            let review = restaurant.reviews[indexPath.row]
             self.deleteCell(at: indexPath)
+            NetworkManager.shared.deleteReview(hall_id: restaurant.hall_id, review_id: review.review_id) { response in
+                
+                NetworkManager.shared.getRestaurant(hall_id: self.restaurant.hall_id) { response in
+                    DispatchQueue.main.sync {
+
+                        let reviewsVC = ReviewViewController(restaurant: response, user: self.user)
+                        self.navigationController?.pushViewController(reviewsVC, animated: true)
+                    }
+                }
+            }
 
         }
+    }
+    
+    @objc func refreshData() {
+        //TODO: Refresh Data
+
+        NetworkManager.shared.getAllRestaurants { restaurants in
+            DispatchQueue.main.sync {
+//                self.shownReviewsData = self.restaurant.reviews
+                self.reviewCollectionView.reloadData()
+                self.refreshControl.endRefreshing()
+            }
+        }
+
     }
     
 
@@ -172,18 +214,23 @@ class ReviewViewController: UIViewController {
 extension ReviewViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return shownReviewsData.count
         return restaurant.reviews.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = reviewCollectionView.dequeueReusableCell(withReuseIdentifier: "ReviewCell", for: indexPath) as! ReviewCollectionViewCell
         let review = restaurant.reviews[indexPath.row]
+//        let review = shownReviewsData[indexPath.row]
+
             
         cell.configure(with: review)
+        cell.displayImages(from: review.image_url)
         
         if user.username == cell.usernameLabel.text {
             cell.deleteButton.isHidden = false
             cell.deleteButton.addTarget(self, action: #selector(deleteButtonTapped(_:)), for: .touchUpInside)
+            self.reviewid = review.review_id
         }
 
     
@@ -191,7 +238,8 @@ extension ReviewViewController: UICollectionViewDataSource {
     }
     
     func deleteCell(at indexPath: IndexPath) {
-            restaurant.reviews.remove(at: indexPath.row)
+        restaurant.reviews.remove(at: indexPath.row)
+//            shownReviewsData.remove(at: indexPath.row)
             reviewCollectionView.deleteItems(at: [indexPath])
         }
 }

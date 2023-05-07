@@ -6,30 +6,32 @@
 //
 
 import UIKit
+import CommonCrypto
 
 class LoginViewController: UIViewController {
     
     let header = UIImageView()
     let footer = UIImageView()
     let infoLabel = UILabel()
-    let usernameLabel = UILabel()
-    let usernameField = UITextField()
+    let emailLabel = UILabel()
+    let emailField = UITextField()
     let passwordLabel = UILabel()
     let passwordField = UITextField()
     let loginButton = UIButton()
     let signupButton = UIButton()
     let failLabel = UILabel()
+    let salt: String = "testing123"
     
-    var users: [User]
-
-    init(users: [User]) {
-        self.users = users
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    var users: [User]
+//
+//    init(users: [User]) {
+//        self.users = users
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,25 +63,25 @@ class LoginViewController: UIViewController {
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(infoLabel)
         
-        usernameLabel.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
-        usernameLabel.font = UIFont(name: "Lato-Bold", size: 22)
-        usernameLabel.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
-        usernameLabel.text = "Username"
-        usernameLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(usernameLabel)
+        emailLabel.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
+        emailLabel.font = UIFont(name: "Lato-Bold", size: 22)
+        emailLabel.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
+        emailLabel.text = "Email"
+        emailLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(emailLabel)
         
-        let paddingView1 = UIView(frame: CGRect(x: 0, y: 0, width: 18, height: usernameField.frame.height))
-        usernameField.leftView = paddingView1
-        usernameField.leftViewMode = .always
-        usernameField.autocapitalizationType = .none
-        usernameField.autocorrectionType = .no
-        usernameField.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
-        usernameField.font = UIFont(name: "Lato-Bold", size: 22)
-        usernameField.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
-        usernameField.layer.backgroundColor = UIColor(red: 0.753, green: 0.11, blue: 0.176, alpha: 0.26).cgColor
-        usernameField.layer.cornerRadius = 22.2
-        usernameField.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(usernameField)
+        let paddingView1 = UIView(frame: CGRect(x: 0, y: 0, width: 18, height: emailField.frame.height))
+        emailField.leftView = paddingView1
+        emailField.leftViewMode = .always
+        emailField.autocapitalizationType = .none
+        emailField.autocorrectionType = .no
+        emailField.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
+        emailField.font = UIFont(name: "Lato-Bold", size: 22)
+        emailField.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
+        emailField.layer.backgroundColor = UIColor(red: 0.753, green: 0.11, blue: 0.176, alpha: 0.26).cgColor
+        emailField.layer.cornerRadius = 22.2
+        emailField.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(emailField)
         
         passwordLabel.textColor = UIColor(red: 1, green: 0.988, blue: 0.883, alpha: 1)
         passwordLabel.font = UIFont(name: "Lato-Bold", size: 22)
@@ -111,7 +113,7 @@ class LoginViewController: UIViewController {
         failLabel.textColor = .red
         failLabel.font = UIFont(name: "Lato-Bold", size: 22)
         failLabel.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
-        failLabel.text = "Login Failed"
+        failLabel.text = "Incorrect Username or Password"
         failLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(failLabel)
         
@@ -141,24 +143,24 @@ class LoginViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            infoLabel.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 12),
+            infoLabel.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 8),
             infoLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            usernameLabel.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 12),
-            usernameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 38)
+            emailLabel.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 8),
+            emailLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 38)
         ])
     
         NSLayoutConstraint.activate([
-            usernameField.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 6),
-            usernameField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            usernameField.widthAnchor.constraint(equalToConstant: 318),
-            usernameField.heightAnchor.constraint(equalToConstant: 60)
+            emailField.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 6),
+            emailField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emailField.widthAnchor.constraint(equalToConstant: 318),
+            emailField.heightAnchor.constraint(equalToConstant: 60)
         ])
         
         NSLayoutConstraint.activate([
-            passwordLabel.topAnchor.constraint(equalTo: usernameField.bottomAnchor, constant: 12),
+            passwordLabel.topAnchor.constraint(equalTo: emailField.bottomAnchor, constant: 12),
             passwordLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 38)
         ])
     
@@ -194,49 +196,77 @@ class LoginViewController: UIViewController {
     }
     
     @objc func signupButtonTapped() {
-        let signupVC = SignupViewController(users: self.users)
+        let signupVC = SignupViewController()
             navigationController?.pushViewController(signupVC, animated: true)
+    }
+    
+    func sha256(string: String) -> String? {
+        guard let data = string.data(using: .utf8) else {
+            return nil
+        }
+        
+        var digest = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+        
+        data.withUnsafeBytes { buffer in
+            _ = CC_SHA256(buffer.baseAddress, CC_LONG(data.count), &digest)
+        }
+        
+        let hexString = digest.map { String(format: "%02x", $0) }.joined()
+        
+        return hexString
+    }
+    
+    func loginError() {
+        failLabel.isHidden = false
     }
     
     @objc func loginButtonTapped() {
         
-        let username = usernameField.text
-        let password = passwordField.text
+//        let username = usernameField.text!
+//        let password = salt + passwordField.text! + salt
+//
+//        var currUser = User(username: "none", password: "none", email: "none")
+
+//        for user in users {
+//            if user.username == username {
+//                currUser = user
+//                break
+//            }
+//        }
+
+//        if username == currUser.username && password == currUser.password {
+//            usernameField.text = ""
+//            passwordField.text = ""
+//            failLabel.isHidden = true
+//            let restaurantVC = RestaurantViewController(user: currUser)
+//            navigationController?.pushViewController(restaurantVC, animated: true)
+//        } else {
+//            failLabel.isHidden = false
+//        }
         
-        var currUser = User(username: "none", password: "none", email: "none")
         
-        for user in users {
-            if user.username == username {
-                currUser = user
-                break
+        let email = emailField.text!
+        let password = sha256(string: salt + passwordField.text! + salt)
+
+        var currUser = User(username: "none", email: "none", user_id: 0)
+
+        
+        NetworkManager.shared.login(email: email, password: password!) { response in
+            DispatchQueue.main.sync {
+                if (response?.username != nil) {
+                    let username = response?.username
+                    let user_id = response?.user_id
+                    currUser = User(username: username!, email: email, user_id: user_id!)
+                    self.emailField.text = ""
+                    self.passwordField.text = ""
+                    self.failLabel.isHidden = true
+                    let restaurantVC = RestaurantViewController(user: currUser)
+                    self.navigationController?.pushViewController(restaurantVC, animated: true)
+                } else {
+                    self.failLabel.isHidden = false
+                    return
+                }
             }
         }
-
-        if username == currUser.username && password == currUser.password {
-            usernameField.text = ""
-            passwordField.text = ""
-            failLabel.isHidden = true
-            let restaurantVC = RestaurantViewController(user: currUser)
-            navigationController?.pushViewController(restaurantVC, animated: true)
-        } else {
-            failLabel.isHidden = false
-        }
-        
-        
-//        var found: Bool = false
-//
-//        NetworkManager.shared.login(username: usernameField.text!, password: passwordField.text!) { response in
-//            if (response != nil) {
-//                found = true
-//                print("yep")
-//            }
-//            if (!found) {
-//                self.failLabel.isHidden = false
-//                return
-//            }
-//
-//            let restaurantVC = RestaurantViewController(user: self.user1)
-//            self.navigationController?.pushViewController(restaurantVC, animated: true)
-//        }
     }
 }

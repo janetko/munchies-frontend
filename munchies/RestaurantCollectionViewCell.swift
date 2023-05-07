@@ -86,8 +86,21 @@ class RestaurantCollectionViewCell: UICollectionViewCell {
     
     func configure(with restaurant: Restaurant) {
         nameLabel.text = restaurant.name
-        eatPicView.image = UIImage(named: restaurant.eatPicName)
-        rating.image = UIImage(named: restaurant.rating)
+        eatPicView.image = UIImage(named: restaurant.image)
+        rating.image = UIImage(named: "stars" + String(Int(restaurant.rating)))
     }
     
+    func displayImages(from urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error loading image: \(error.localizedDescription)")
+            } else if let data = data {
+                DispatchQueue.main.async {
+                    self.eatPicView.image = UIImage(data: data)
+                }
+            }
+        }.resume()
+    }
+
 }

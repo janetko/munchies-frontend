@@ -20,6 +20,8 @@ class RestaurantViewController: UIViewController {
     var restaurantsData: [Restaurant] = []
     var shownRestaurantsData: [Restaurant] = []
     
+    
+    
     let user: User
     
     init(user: User) {
@@ -31,12 +33,12 @@ class RestaurantViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
         
-    var reviews: [Review] = [
-        Review(username: "janetko", date: "1/2/23", comment: "food is great!", foodPic: UIImage(named:"foodpic1")!, rating: "stars5"),
-        Review(username: "emmando", date: "2/2/23", comment: "yum! so many options. I love this place!", foodPic: UIImage(named:"foodpic2")!, rating: "stars4"),
-        Review(username: "andrefo", date: "4/3/23", comment: "food is bland", foodPic: UIImage(named:"foodpic3")!, rating: "stars1"),
-        Review(username: "elvisma", date: "5/4/23", comment: "food is good!", foodPic: UIImage(named:"foodpic4")!, rating: "stars3")
-    ]
+//    var reviews: [Review] = [
+//        Review(username: "janetko", date: "1/2/23", comment: "food is great!", foodPic: UIImage(named:"foodpic1")!, rating: "stars5"),
+//        Review(username: "emmando", date: "2/2/23", comment: "yum! so many options. I love this place!", foodPic: UIImage(named:"foodpic2")!, rating: "stars4"),
+//        Review(username: "andrefo", date: "4/3/23", comment: "food is bland", foodPic: UIImage(named:"foodpic3")!, rating: "stars1"),
+//        Review(username: "elvisma", date: "5/4/23", comment: "food is good!", foodPic: UIImage(named:"foodpic4")!, rating: "stars3")
+//    ]
     
     var restaurants: [Restaurant] = []
     
@@ -53,12 +55,12 @@ class RestaurantViewController: UIViewController {
         let formatParameter = URLQueryItem(name: "dining_halls", value: "json")
         url.append(queryItems: [formatParameter])
         
-        restaurants = [
-            Restaurant(name: "Trillium", eatPicName: "trillium", rating: "stars5", reviews: reviews),
-            Restaurant(name: "Bear Necessities", eatPicName: "bear_necessities", rating: "stars4", reviews: reviews),
-            Restaurant(name: "Jansen's Market", eatPicName: "jansens", rating: "stars3", reviews: reviews),
-            Restaurant(name: "Bus Stop Bagels", eatPicName: "bus_stop", rating: "stars2", reviews: reviews)
-        ]
+//        restaurants = [
+//            Restaurant(name: "Trillium", eatPicName: "trillium", rating: 5, reviews: reviews),
+//            Restaurant(name: "Bear Necessities", eatPicName: "bear_necessities", rating: 4, reviews: reviews),
+//            Restaurant(name: "Jansen's Market", eatPicName: "jansens", rating: 3, reviews: reviews),
+//            Restaurant(name: "Bus Stop Bagels", eatPicName: "bus_stop", rating: 2, reviews: reviews)
+//        ]
         
         // Remove UINavBar background color
         let app = UINavigationBarAppearance()
@@ -158,6 +160,14 @@ class RestaurantViewController: UIViewController {
         
     }
     
+//    func displayImages() {
+//        NetworkManager.shared.downloadImage { images in
+//            DispatchQueue.main.async {
+//                self.eatPicView.image = images
+//            }
+//        }
+//    }
+    
     func createData() {
         
         NetworkManager.shared.getAllRestaurants { restaurants in
@@ -214,6 +224,7 @@ extension RestaurantViewController: UICollectionViewDataSource {
         
             
         cell.configure(with: restaurant)
+        cell.displayImages(from: restaurant.image)
         cell.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
         cell.layer.shadowOpacity = 1
         cell.layer.shadowRadius = 4
@@ -236,10 +247,15 @@ extension RestaurantViewController: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let restaurant = restaurants[indexPath.row]
+        let restaurant = shownRestaurantsData[indexPath.row]
        showReviews(for: restaurant)
     }
     
 
 }
+
+protocol RestaurantDelegate : AnyObject {
+    func refreshData()
+}
+
 

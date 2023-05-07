@@ -22,6 +22,7 @@ class ReviewCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        
         reviewBox.image = UIImage(named: "reviewbox")
         reviewBox.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(reviewBox)
@@ -115,14 +116,30 @@ class ReviewCollectionViewCell: UICollectionViewCell {
         
     }
     
+    func displayImages(from urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error loading image: \(error.localizedDescription)")
+            } else if let data = data {
+                DispatchQueue.main.async {
+                    self.foodPicView.image = UIImage(data: data)
+                }
+            }
+        }.resume()
+    }
+    
     func configure(with review: Review) {
+        let currentDate = Date(timeIntervalSince1970: TimeInterval(review.date))
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "M/d/yy"
+        dateFormatter.string(from: currentDate)
+        
         usernameLabel.text = review.username
-        dateLabel.text = review.date
-        commentLabel.text = review.comment
-        foodPicView.image = UIImage(data: review.foodPicData)
-        rating.image = UIImage(named: review.rating)
+        dateLabel.text = dateFormatter.string(from: currentDate)
+        commentLabel.text = review.contents
+        foodPicView.image = UIImage(named: review.image_url)
+        rating.image = UIImage(named: "stars" + String(Int(review.rating)))
     }
     
 }
-
-

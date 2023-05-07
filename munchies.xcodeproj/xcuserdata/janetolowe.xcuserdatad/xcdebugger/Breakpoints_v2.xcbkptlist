@@ -14,10 +14,58 @@
             filePath = "munchies/NetworkManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "13"
-            endingLineNumber = "13"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
             landmarkName = "NetworkManager"
             landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D2419C30-34C8-4634-8C60-AFF12D7B8AE3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "munchies/LoginViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "LoginViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "D2419C30-34C8-4634-8C60-AFF12D7B8AE3 - e1ce0e656e01a04e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "munchies.LoginViewController.__allocating_init(users: Swift.Array&lt;munchies.User&gt;) -&gt; munchies.LoginViewController"
+                  moduleName = "munchies"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/janetolowe/Downloads/Academics/Classes/CS1998-601/projects/munchies/munchies/LoginViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "24">
+               </Location>
+               <Location
+                  uuid = "D2419C30-34C8-4634-8C60-AFF12D7B8AE3 - 7a8c400119688443"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "munchies.LoginViewController.init(users: Swift.Array&lt;munchies.User&gt;) -&gt; munchies.LoginViewController"
+                  moduleName = "munchies"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/janetolowe/Downloads/Academics/Classes/CS1998-601/projects/munchies/munchies/LoginViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "132">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

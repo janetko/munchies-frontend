@@ -7,6 +7,7 @@
 
 import UIKit
 import AVFoundation
+import Foundation
 
 class WriteReviewViewController: UIViewController {
     
@@ -24,6 +25,9 @@ class WriteReviewViewController: UIViewController {
     let sliderBox = UIImageView()
     let uploadImageView = UIImageView()
     var uploadImage = UIImage(named: "")
+    var isImage = false
+    
+    weak var restaurantsViewController: RestaurantViewController?
     
     weak var delegate: ReloadViewDelegate?
     
@@ -244,10 +248,6 @@ class WriteReviewViewController: UIViewController {
         
         present(imagePicker, animated: true, completion: nil)
         
-
-
-
-        
     }
     
     @objc func backButtonTapped() {
@@ -259,25 +259,27 @@ class WriteReviewViewController: UIViewController {
     
     @objc func submitReview() {
         
-        // format the date
-        let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "M/d/yy"
+        let contents = commentTextView.text ?? ""
+        let rating = Int(ratingSlider.value)
+        let foodPicData = String(((uploadImage?.jpegData(compressionQuality: 1))?.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters))!)
+        
+        print(foodPicData, "HEYYY")
 
-        let username = user.username
-        let date = dateFormatter.string(from: currentDate)
-        let comment = commentTextView.text ?? ""
-        let foodPic = uploadImage
-        let rating = "stars" + String(Int(ratingSlider.value))
-
-        let newReview = Review(username: username, date: date, comment: comment, foodPic: foodPic!, rating: rating)
-        restaurant.reviews.append(newReview)
-            
-        let reviewsVC = ReviewViewController(restaurant: restaurant, user: self.user)
-            navigationController?.pushViewController(reviewsVC, animated: true)
+        NetworkManager.shared.createReview(hall_id:self.restaurant.hall_id, user_id: self.user.user_id, contents: contents, rating: rating, with_image: self.isImage, image_data: "") { response in
+            DispatchQueue.main.sync {
+                NetworkManager.shared.getRestaurant(hall_id: self.restaurant.hall_id) { response in
+                    DispatchQueue.main.sync {
+                        let reviewsVC = ReviewViewController(restaurant: response, user: self.user)
+                        self.navigationController?.pushViewController(reviewsVC, animated: true)
+                            }
+                        }
+                    }
+                }
         }
+    }
     
-}
+
+
 
 extension WriteReviewViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -285,7 +287,8 @@ extension WriteReviewViewController: UIImagePickerControllerDelegate & UINavigat
             
             uploadImage = selectedImage
             uploadImageView.image = uploadImage
-            
+            isImage = true
+                        
             // Do something with the selected image
         }
         dismiss(animated: true, completion: nil)

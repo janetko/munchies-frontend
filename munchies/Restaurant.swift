@@ -8,14 +8,16 @@
 
 struct Restaurant: Codable {
     var name: String
-    var eatPicName: String
-    var rating: String
+    var image: String
+    var rating: Float
+    var hall_id: Int
     var reviews: [Review]
     
-    init(name: String, eatPicName: String, rating: String, reviews: [Review]) {
+    init(name: String, eatPicName: String, rating: Float, hall_id: Int, reviews: [Review]) {
         self.name = name
-        self.eatPicName = eatPicName
+        self.image = eatPicName
         self.rating = rating
+        self.hall_id = hall_id
         self.reviews = reviews
     }
 }

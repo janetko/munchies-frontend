@@ -23,20 +23,6 @@ class SignupViewController: UIViewController {
 
     let failLabel = UILabel()
     
-    var users: [User]
-    
-//    weak var delegate: SignupDelegate?
-
-    init(users: [User]) {
-        self.users = users
-//        self.delegate = delegate
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-        
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,7 +129,7 @@ class SignupViewController: UIViewController {
         failLabel.textColor = .red
         failLabel.font = UIFont(name: "Lato-Bold", size: 22)
         failLabel.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
-        failLabel.text = "signup Failed"
+        failLabel.text = "Sign Up Failed"
         failLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(failLabel)
         
@@ -220,8 +206,8 @@ class SignupViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            failLabel.topAnchor.constraint(equalTo: signupButton.bottomAnchor, constant: 3),
-            failLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            failLabel.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 6),
+            failLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -38),
         ])
         
         
@@ -237,20 +223,32 @@ class SignupViewController: UIViewController {
     }
     
     @objc func signupButtonTapped() {
-            
+        
         let username = usernameField.text!
         let password = passwordField.text!
         let email = emailField.text!
         
-        let newUser = User(username: username, password: password, email: email)
-        users.append(newUser)
+        //        let newUser = User(username: username, password: password, email: email)
+        //        users.append(newUser)
         
         NetworkManager.shared.createUser(email: email, password: password, username: username) { response in
+            DispatchQueue.main.sync {
+                if (response != nil) {
+                    self.emailField.text = ""
+                    self.usernameField.text = ""
+                    self.passwordField.text = ""
+                    self.failLabel.isHidden = true
+                    let currUser = User(username: response!.username, email: response!.email, user_id: response!.user_id)
+                    let restaurantVC = RestaurantViewController(user: currUser)
+                    self.navigationController?.pushViewController(restaurantVC, animated: true)
+                } else {
+                    self.failLabel.isHidden = false
+                    return
+                }
+            }
+            
         }
-        
-        let loginVC = LoginViewController(users: self.users)
-            navigationController?.pushViewController(loginVC, animated: true)
-        }
+    }
     
     @objc func backButtonTapped() {
         if let loginVC = navigationController?.viewControllers.first(where: { $0 is LoginViewController }) {
@@ -258,6 +256,7 @@ class SignupViewController: UIViewController {
         }
     }
 }
+
 
 
 //protocol SignupDelegate: UIViewController {

@@ -9,6 +9,6 @@ import Foundation
 
 struct SessionToken: Codable {
     let session_token: String
-    let session_expiration: String
-    let update_token: String
+//    let expires_at: Int
+//    let created_at: Int
 }
