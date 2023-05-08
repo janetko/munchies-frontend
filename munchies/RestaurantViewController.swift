@@ -160,13 +160,6 @@ class RestaurantViewController: UIViewController {
         
     }
     
-//    func displayImages() {
-//        NetworkManager.shared.downloadImage { images in
-//            DispatchQueue.main.async {
-//                self.eatPicView.image = images
-//            }
-//        }
-//    }
     
     func createData() {
         
@@ -186,9 +179,13 @@ class RestaurantViewController: UIViewController {
     }
     
     func showReviews(for restaurant: Restaurant) {
-        let reviewsViewController = ReviewViewController(restaurant: restaurant, user: self.user)
-            navigationController?.pushViewController(reviewsViewController, animated: true)
+        NetworkManager.shared.getRestaurant(hall_id: restaurant.hall_id) { response in
+            DispatchQueue.main.sync {
+                let reviewsViewController = ReviewViewController(restaurant: response, user: self.user)
+                self.navigationController?.pushViewController(reviewsViewController, animated: true)
+            }
         }
+    }
     
     @objc func logoutButtonTapped() {
           if let loginVC = navigationController?.viewControllers.first(where: { $0 is LoginViewController }) {
@@ -213,13 +210,11 @@ class RestaurantViewController: UIViewController {
 extension RestaurantViewController: UICollectionViewDataSource {
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return restaurants.count
         return shownRestaurantsData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = restaurantCollectionView.dequeueReusableCell(withReuseIdentifier: "RestaurantCell", for: indexPath) as! RestaurantCollectionViewCell
-//        let restaurant = restaurants[indexPath.row]
         let restaurant = shownRestaurantsData[indexPath.row]
         
             
@@ -248,7 +243,7 @@ extension RestaurantViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let restaurant = shownRestaurantsData[indexPath.row]
-       showReviews(for: restaurant)
+        showReviews(for: restaurant)
     }
     
 

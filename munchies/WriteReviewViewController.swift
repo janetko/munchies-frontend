@@ -261,9 +261,9 @@ class WriteReviewViewController: UIViewController {
         
         let contents = commentTextView.text ?? ""
         let rating = Int(ratingSlider.value)
-        let foodPicData = String(((uploadImage?.jpegData(compressionQuality: 1))?.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters))!)
-        
-        print(foodPicData, "HEYYY")
+//        let foodPicData = String(((uploadImage?.jpegData(compressionQuality: 1))?.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters))!)
+//
+//        print(foodPicData, "HEYYY")
 
         NetworkManager.shared.createReview(hall_id:self.restaurant.hall_id, user_id: self.user.user_id, contents: contents, rating: rating, with_image: self.isImage, image_data: "") { response in
             DispatchQueue.main.sync {
@@ -276,8 +276,58 @@ class WriteReviewViewController: UIViewController {
                     }
                 }
         }
-    }
     
+    
+//    func UploadImage(){
+//            // your image from Image picker, as of now I am picking image from the bundle
+//        let image = self.uploadImage
+//        let imageData = image?.jpegData(compressionQuality: 0.7)
+//        let baseurl = "http://34.85.222.240/api/hall/"
+//        let url = URL(string: baseurl + String(restaurant.hall_id) + "/reviews/")!
+//        var urlRequest = URLRequest(url: url)
+//
+//        urlRequest.httpMethod = "post"
+//        let bodyBoundary = "--------------------------\(UUID().uuidString)"
+//        urlRequest.addValue("multipart/form-data; boundary=\(bodyBoundary)", forHTTPHeaderField: "Content-Type")
+//
+//        //attachmentKey is the api parameter name for your image do ask the API developer for this
+//       // file name is the name which you want to give to the file
+//        let requestData = createRequestBody(imageData: imageData!, boundary: bodyBoundary, attachmentKey: "reviewPicture", fileName: "1.jpg")
+//
+//        urlRequest.addValue("\(requestData.count)", forHTTPHeaderField: "content-length")
+//        urlRequest.httpBody = requestData
+//
+//        URLSession.shared.dataTask(with: urlRequest) { (data, httpUrlResponse, error) in
+//
+//            if(error == nil && data != nil && data?.count != 0){
+//                do {
+//                    let response = try JSONDecoder().decode(???, from: data!)
+//                    print(response)
+//                }
+//
+//                catch let decodingError {
+//                    debugPrint(decodingError)
+//                }
+//            }
+//        }.resume()
+//        }
+//
+//        func createRequestBody(imageData: Data, boundary: String, attachmentKey: String, fileName: String) -> Data{
+//            let lineBreak = "\r\n"
+//            var requestBody = Data()
+//
+//            requestBody.append("\(lineBreak)--\(boundary + lineBreak)" .data(using: .utf8)!)
+//            requestBody.append("Content-Disposition: form-data; name=\"\(attachmentKey)\"; filename=\"\(fileName)\"\(lineBreak)" .data(using: .utf8)!)
+//            requestBody.append("Content-Type: image/jpeg \(lineBreak + lineBreak)" .data(using: .utf8)!) // you can change the type accordingly if you want to
+//            requestBody.append(imageData)
+//            requestBody.append("\(lineBreak)--\(boundary)--\(lineBreak)" .data(using: .utf8)!)
+//
+//            return requestBody
+//        }
+//
+//
+    }
+
 
 
 
@@ -287,7 +337,8 @@ extension WriteReviewViewController: UIImagePickerControllerDelegate & UINavigat
             
             uploadImage = selectedImage
             uploadImageView.image = uploadImage
-            isImage = true
+//            isImage = true
+//            UploadImage()
                         
             // Do something with the selected image
         }

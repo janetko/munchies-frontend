@@ -20,8 +20,7 @@ class ReviewViewController: UIViewController {
     
     let refreshControl = UIRefreshControl()
     
-    var hallid = 0
-    var reviewid = 0
+
     
 //    var shownReviewsData: [Review] = []
     
@@ -168,8 +167,8 @@ class ReviewViewController: UIViewController {
     }
     
     @objc func backButtonTapped() {
-        NetworkManager.shared.getAllRestaurants { restaurants in
-        }
+//        NetworkManager.shared.getAllRestaurants { restaurants in
+//        }
           if let restaurantVC = navigationController?.viewControllers.first(where: { $0 is RestaurantViewController }) {
               navigationController?.popToViewController(restaurantVC, animated: true)
           }
@@ -227,10 +226,9 @@ extension ReviewViewController: UICollectionViewDataSource {
         cell.configure(with: review)
         cell.displayImages(from: review.image_url)
         
-        if user.username == cell.usernameLabel.text {
+        if user.user_id == review.user_id {
             cell.deleteButton.isHidden = false
             cell.deleteButton.addTarget(self, action: #selector(deleteButtonTapped(_:)), for: .touchUpInside)
-            self.reviewid = review.review_id
         }
 
     
